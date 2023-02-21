@@ -1,0 +1,15 @@
+#!/bin/bash
+
+var=$(awk '{if(/Host /) print $2}' $HOME/.ssh/config)
+
+gum style \
+	--foreground 9 --border 212 --border double \
+	--align center --width 50 --margin "1 2" --padding "2 4" \
+	'What host do you want to ssh to?'
+
+host=$(gum choose $var)
+confirm=$(gum confirm)
+
+gum spin --spinner hamburger --title "Connecting to SSH host..." -- sleep 3
+
+ssh $host
